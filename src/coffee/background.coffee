@@ -105,8 +105,6 @@ updateIcon = () ->
 
     text = getElapsedTimeMinutes()
     if isOverTime()
-      text += 'X'
-    else
       text += '!'
 
     chrome.browserAction.setBadgeText

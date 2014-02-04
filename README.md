@@ -6,7 +6,9 @@ WebTime
 
 WebTime is a dead-simple Chrome extension that keeps track of how much time you spend on certain sites each day.
 
-You configure a list of sites on which you want to track time, and a daily time limit.  WebTime gives you a colored indicator in the toolbar to help you keep track of your daily time on those sites.
+You configure a list of sites on which you want to track time, and a daily time limit.  WebTime gives you a colored icon in the toolbar to help you keep track of your daily time on those sites.
+
+The toolbar icon changes slowly from green -> yellow -> orange -> red.  When you're on a listed site, it shows you your total minutes today on your site list.  If you've gone over your alotment, it adds '!'.
 
 I find it useful to know how much time I'm spending 'unproductively'.  I set my list to be domains that I go when I'm bored, e.g. 'cnn.com', 'techcrunch.com', etc.
 
