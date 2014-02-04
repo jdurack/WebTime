@@ -1,5 +1,5 @@
 (function() {
-  var addEvents, addWatchURLToForm, addWatchURLsToForm, checkAndAddNewWatchURL, formSubmitEvent, getMaxMinutesPerDayElement, getNewWatchURLElement, init, maxMinutesPerDayChangeEvent, newWatchURLEvent, removeEvents, removeWatchURL, removeWatchURLClickEvent, resetEvents, resetForm, setMaxSecondsPerDayValue;
+  var addEvents, addWatchURLToForm, addWatchURLsToForm, checkAndAddNewWatchURL, formSubmitEvent, getMaxMinutesPerDayElement, getNewWatchURLElement, init, maxMinutesPerDayChangeEvent, newWatchURLEvent, removeEvents, removeWatchURL, removeWatchURLClickEvent, resetEvents, resetForm, setMaxMinutesPerDayValue;
 
   init = function() {
     return resetForm();
@@ -107,15 +107,16 @@
   resetForm = function() {
     $('.watchURL').remove();
     addWatchURLsToForm();
-    setMaxSecondsPerDayValue();
+    setMaxMinutesPerDayValue();
     getNewWatchURLElement().focus();
     return resetEvents();
   };
 
-  setMaxSecondsPerDayValue = function() {
-    var maxSecondsPerDay;
+  setMaxMinutesPerDayValue = function() {
+    var maxMinutesPerDay, maxSecondsPerDay;
     maxSecondsPerDay = WebTime.utils.getMaxSecondsPerDay();
-    return getMaxMinutesPerDayElement().value = maxSecondsPerDay;
+    maxMinutesPerDay = Math.floor(maxSecondsPerDay / 60);
+    return getMaxMinutesPerDayElement().value = maxMinutesPerDay;
   };
 
   removeWatchURL = function(index) {

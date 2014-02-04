@@ -83,13 +83,14 @@ checkAndAddNewWatchURL = () ->
 resetForm = () ->
   $('.watchURL').remove()
   addWatchURLsToForm()
-  setMaxSecondsPerDayValue()
+  setMaxMinutesPerDayValue()
   getNewWatchURLElement().focus()
   resetEvents()
 
-setMaxSecondsPerDayValue = () ->
+setMaxMinutesPerDayValue = () ->
   maxSecondsPerDay = WebTime.utils.getMaxSecondsPerDay()
-  getMaxMinutesPerDayElement().value = maxSecondsPerDay
+  maxMinutesPerDay = Math.floor ( maxSecondsPerDay / 60 )
+  getMaxMinutesPerDayElement().value = maxMinutesPerDay
 
 removeWatchURL = (index) ->
   unless index >= 0 then return
