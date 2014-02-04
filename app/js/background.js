@@ -159,9 +159,9 @@
   };
 
   isOverTime = function() {
-    var elapsedTime, fractionElapsed;
-    elapsedTime = getElapsedTimeSeconds();
-    fractionElapsed = elapsedTime / WebTime.utils.getMaxSecondsPerDay();
+    var elapsedTimeSeconds, fractionElapsed;
+    elapsedTimeSeconds = getElapsedTimeSeconds();
+    fractionElapsed = elapsedTimeSeconds / WebTime.utils.getMaxSecondsPerDay();
     if (fractionElapsed >= 1) {
       return true;
     }
@@ -169,9 +169,9 @@
   };
 
   getIconColor = function() {
-    var colorString, data, elapsedTime, fractionElapsed, gradientWidth, x;
-    elapsedTime = getElapsedTimeSeconds();
-    fractionElapsed = elapsedTime / WebTime.utils.getMaxSecondsPerDay();
+    var colorString, data, elapsedTimeSeconds, fractionElapsed, gradientWidth, x;
+    elapsedTimeSeconds = getElapsedTimeSeconds();
+    fractionElapsed = elapsedTimeSeconds / WebTime.utils.getMaxSecondsPerDay();
     if (fractionElapsed > 1) {
       fractionElapsed = 1;
     }

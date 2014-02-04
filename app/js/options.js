@@ -55,7 +55,7 @@
     element = getMaxMinutesPerDayElement();
     newMaxMinutesPerDay = element.value;
     newMaxSecondsPerDay = newMaxMinutesPerDay * 60;
-    return WebTime.utils.setMaxSecondsPerDay(newMaxMinutesPerDay);
+    return WebTime.utils.setMaxSecondsPerDay(newMaxSecondsPerDay);
   };
 
   removeWatchURLClickEvent = function(event) {

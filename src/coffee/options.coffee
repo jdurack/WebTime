@@ -41,7 +41,7 @@ maxMinutesPerDayChangeEvent = (event) ->
   element = getMaxMinutesPerDayElement()
   newMaxMinutesPerDay = element.value
   newMaxSecondsPerDay = newMaxMinutesPerDay * 60
-  WebTime.utils.setMaxSecondsPerDay newMaxMinutesPerDay
+  WebTime.utils.setMaxSecondsPerDay newMaxSecondsPerDay
 
 removeWatchURLClickEvent = (event) ->
   indicator = 'removeWatchURL-'

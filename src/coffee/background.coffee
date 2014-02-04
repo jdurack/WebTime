@@ -119,15 +119,15 @@ updateIcon = () ->
       text: ''
 
 isOverTime = () ->
-  elapsedTime = getElapsedTimeSeconds()
-  fractionElapsed = elapsedTime / WebTime.utils.getMaxSecondsPerDay()
+  elapsedTimeSeconds = getElapsedTimeSeconds()
+  fractionElapsed = elapsedTimeSeconds / WebTime.utils.getMaxSecondsPerDay()
   if fractionElapsed >= 1
     return true
   return false
 
 getIconColor = () ->
-  elapsedTime = getElapsedTimeSeconds()
-  fractionElapsed = elapsedTime / WebTime.utils.getMaxSecondsPerDay()
+  elapsedTimeSeconds = getElapsedTimeSeconds()
+  fractionElapsed = elapsedTimeSeconds / WebTime.utils.getMaxSecondsPerDay()
   if fractionElapsed > 1
     fractionElapsed = 1
   gradientWidth = WebTime.config.gradientWidth
