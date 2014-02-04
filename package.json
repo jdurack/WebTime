@@ -1,0 +1,24 @@
+{
+    "name": "WebTime"
+  , "version": "0.0.1"
+  , "repository": {
+        "type": "git"
+      , "url": "my repo here"
+    }
+  , "author": "JRD"
+  , "license": "BSD-2-Clause"
+  , "devDependencies": {
+        "grunt": "~0.4.2"
+      , "grunt-contrib-coffee": "~0.8.0"
+      , "grunt-contrib-copy": "~0.5.0"
+      , "grunt-contrib-watch": "~0.5.3"
+    }
+  , "dependencies": {
+    }
+  , "description": "WebTime. Monitor your time on the web."
+  , "scripts": {
+    }
+  , "engines": {
+      "node": "0.10.x"
+    }
+}
