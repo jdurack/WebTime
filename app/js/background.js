@@ -1,5 +1,5 @@
 (function() {
-  var activeTab, checkTab, clockInterval, getAndCheckCurrentTab, getColorHex, getDomainFromURL, getElapsedTime, getElapsedTimeMinutes, getGradientCanvasContext, getIconColor, getIconImageData, getLocalStorageKey, gradientCanvas, gradientCanvasContext, iconCanvas, isClockRunning, isOverTime, run, runClock, setElapsedTime, stopClock, updateClock, updateIcon;
+  var activeTab, checkTab, clockInterval, getAndCheckCurrentTab, getColorHex, getDomainFromURL, getElapsedTimeMinutes, getElapsedTimeSeconds, getElapsedTimeSecondsLocalStorageKey, getGradientCanvasContext, getIconColor, getIconImageData, gradientCanvas, gradientCanvasContext, iconCanvas, isClockRunning, isOverTime, run, runClock, setElapsedTime, stopClock, updateClock, updateIcon;
 
   activeTab = null;
 
@@ -50,7 +50,7 @@
       return;
     }
     matched = false;
-    _ref = WebTime.config.defaultWatchURLs;
+    _ref = WebTime.utils.getWatchURLs();
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       watchDomain = _ref[_i];
       foundIndex = domain.indexOf(watchDomain);
@@ -66,8 +66,10 @@
   };
 
   runClock = function() {
+    var timeIntervaleMilliseconds;
     if (!isClockRunning()) {
-      clockInterval = setInterval(updateClock, WebTime.config.timeInterval);
+      timeIntervaleMilliseconds = WebTime.config.timeIntervalSeconds * 1000;
+      clockInterval = setInterval(updateClock, timeIntervaleMilliseconds);
       return updateIcon();
     }
   };
@@ -80,46 +82,46 @@
     }
   };
 
-  getLocalStorageKey = function() {
+  getElapsedTimeSecondsLocalStorageKey = function() {
     var currentDate, day, localStorageKey, localStorageKeyBase, month, year;
     currentDate = new Date();
     day = currentDate.getDate();
     month = currentDate.getMonth() + 1;
     year = currentDate.getFullYear();
-    localStorageKeyBase = WebTime.config.localStorageKeys.elapsedTimeBase;
-    localStorageKey = localStorageKeyBase + year + '-' + month + '-' + day;
+    localStorageKeyBase = WebTime.config.localStorageKeys.elapsedTimeSecondsBase;
+    localStorageKey = localStorageKeyBase + '-' + year + '-' + month + '-' + day;
     return localStorageKey;
   };
 
-  getElapsedTime = function() {
-    var elapsedTime, localStorageKey;
-    localStorageKey = getLocalStorageKey();
-    elapsedTime = localStorage.getItem(localStorageKey);
-    if (!elapsedTime) {
-      elapsedTime = 0;
+  getElapsedTimeSeconds = function() {
+    var elapsedTimeSeconds, localStorageKey;
+    localStorageKey = getElapsedTimeSecondsLocalStorageKey();
+    elapsedTimeSeconds = localStorage.getItem(localStorageKey);
+    if (!elapsedTimeSeconds) {
+      elapsedTimeSeconds = 0;
     } else {
-      elapsedTime = parseInt(elapsedTime);
+      elapsedTimeSeconds = parseInt(elapsedTimeSeconds);
     }
-    return elapsedTime;
+    return elapsedTimeSeconds;
   };
 
   getElapsedTimeMinutes = function() {
-    var elapsedTime, elapsedTimeMinutes;
-    elapsedTime = getElapsedTime();
-    elapsedTimeMinutes = Math.floor(elapsedTime / (1000 * 60));
+    var elapsedTimeMinutes, elapsedTimeSeconds;
+    elapsedTimeSeconds = getElapsedTimeSeconds();
+    elapsedTimeMinutes = Math.floor(elapsedTimeSeconds / 60);
     return elapsedTimeMinutes;
   };
 
-  setElapsedTime = function(elapsedTime) {
+  setElapsedTime = function(elapsedTimeSeconds) {
     var localStorageKey;
-    localStorageKey = getLocalStorageKey();
-    return localStorage.setItem(localStorageKey, elapsedTime);
+    localStorageKey = getElapsedTimeSecondsLocalStorageKey();
+    return localStorage.setItem(localStorageKey, elapsedTimeSeconds);
   };
 
-  updateClock = function(elapsedTime) {
-    elapsedTime = getElapsedTime();
-    elapsedTime += parseInt(WebTime.config.timeInterval);
-    setElapsedTime(elapsedTime);
+  updateClock = function(elapsedTimeSeconds) {
+    elapsedTimeSeconds = getElapsedTimeSeconds();
+    elapsedTimeSeconds += parseInt(WebTime.config.timeIntervalSeconds);
+    setElapsedTime(elapsedTimeSeconds);
     return updateIcon();
   };
 
@@ -140,15 +142,15 @@
       chrome.browserAction.setBadgeBackgroundColor({
         color: WebTime.config.badgeColor
       });
-      text = getElapsedTimeMinutes();
+      text = getElapsedTimeMinutes().toString();
       if (isOverTime()) {
-        text += 'X';
-      } else {
         text += '!';
       }
-      return chrome.browserAction.setBadgeText({
+      console.log('text: ', text);
+      chrome.browserAction.setBadgeText({
         text: text
       });
+      return console.log('text done.');
     } else {
       return chrome.browserAction.setBadgeText({
         text: ''
@@ -158,8 +160,8 @@
 
   isOverTime = function() {
     var elapsedTime, fractionElapsed;
-    elapsedTime = getElapsedTime();
-    fractionElapsed = elapsedTime / WebTime.config.maxTimePerDay;
+    elapsedTime = getElapsedTimeSeconds();
+    fractionElapsed = elapsedTime / WebTime.utils.getMaxSecondsPerDay();
     if (fractionElapsed >= 1) {
       return true;
     }
@@ -168,8 +170,8 @@
 
   getIconColor = function() {
     var colorString, data, elapsedTime, fractionElapsed, gradientWidth, x;
-    elapsedTime = getElapsedTime();
-    fractionElapsed = elapsedTime / WebTime.config.maxTimePerDay;
+    elapsedTime = getElapsedTimeSeconds();
+    fractionElapsed = elapsedTime / WebTime.utils.getMaxSecondsPerDay();
     if (fractionElapsed > 1) {
       fractionElapsed = 1;
     }
@@ -186,8 +188,8 @@
   getColorHex = function(colorValue) {
     var hex;
     hex = colorValue.toString(16);
-    if (hex === '0') {
-      hex = '00';
+    if (hex.length === 1) {
+      hex = '0' + hex;
     }
     return hex;
   };

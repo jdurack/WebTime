@@ -1,10 +1,10 @@
 WebTime.config = 
-  timeInterval: 1000
+  timeIntervalSeconds: 1
   localStorageKeys:
-    elapsedTimeBase: 'WebTime.elapsedTime-'
+    elapsedTimeSecondsBase: 'WebTime.elapsedTimeSeconds'
     watchURLs: 'WebTime.watchURLs'
-  maxTimePerDay: 1000 * 60 * 45 #45 minutes
-  #maxTimePerDay: 1000 * 60 * 2 #5 minutes
+    maxSecondsPerDay: 'WebTime.maxSecondsPerDay'
+  defaultMaxSecondsPerDay: 60 * 30 #30 minutes
   iconWidthAndHeight: 19
   gradientWidth: 100
   gradientStartColor: 'DarkGreen'
@@ -12,6 +12,3 @@ WebTime.config =
   gradientTwoThirdsColor: 'DarkOrange'
   gradientStopColor: 'DarkRed'
   badgeColor: 'DarkRed'
-  defaultWatchURLs: [
-    'techcrunch.com'
-  ]

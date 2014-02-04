@@ -1,19 +1,19 @@
 (function() {
   WebTime.config = {
-    timeInterval: 1000,
+    timeIntervalSeconds: 1,
     localStorageKeys: {
-      elapsedTimeBase: 'WebTime.elapsedTime-',
-      watchURLs: 'WebTime.watchURLs'
+      elapsedTimeSecondsBase: 'WebTime.elapsedTimeSeconds',
+      watchURLs: 'WebTime.watchURLs',
+      maxSecondsPerDay: 'WebTime.maxSecondsPerDay'
     },
-    maxTimePerDay: 1000 * 60 * 45,
+    defaultMaxSecondsPerDay: 60 * 30,
     iconWidthAndHeight: 19,
     gradientWidth: 100,
     gradientStartColor: 'DarkGreen',
     gradientOneThirdColor: 'GoldenRod',
     gradientTwoThirdsColor: 'DarkOrange',
     gradientStopColor: 'DarkRed',
-    badgeColor: 'DarkRed',
-    defaultWatchURLs: ['cnn.com', 'droid-life.com', 'engadget.com', 'movieswithbutter.com', 'techcrunch.com', 'traileraddict.com', 'wired.com', 'woot.com']
+    badgeColor: 'DarkRed'
   };
 
 }).call(this);

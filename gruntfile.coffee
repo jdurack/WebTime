@@ -33,6 +33,20 @@ module.exports = (grunt) =>
           src: ['manifest.json']
           dest: 'app/'
         ]
+      vendorJS:
+        files: [
+          expand: true
+          cwd: 'vendor/js'
+          src: ['**/*.js']
+          dest: 'app/js/vendor/'
+          filter: 'isFile'
+        ]
+    handlebars:
+      templates:
+        options:
+          namespace: 'WebTime.Template'
+        files:
+          'app/js/templates.js': ['src/html/template/**/*.html']
     watch:
       app:
         files: 'src/coffee/**/*.coffee'
@@ -46,13 +60,21 @@ module.exports = (grunt) =>
       copyManifest:
         files: 'src/manifest.json'
         tasks: ['copy:manifest']
+      copyVendorJS:
+        files: 'vendor/js/**/*.js'
+        tasks: ['copy:vendorJS']
+      handlebars:
+        files: 'src/html/template/**/*.html'
+        tasks: ['handlebars:templates']
 
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-copy'
+  grunt.loadNpmTasks 'grunt-contrib-handlebars'
   grunt.loadNpmTasks 'grunt-contrib-watch'
 
   grunt.registerTask 'default', [
-    'coffee:app'
+    'coffee'
     'copy'
+    'handlebars'
     'watch'
   ]

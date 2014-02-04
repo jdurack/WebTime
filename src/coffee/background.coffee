@@ -35,7 +35,7 @@ checkTab = (tab) ->
     return
 
   matched = false
-  for watchDomain in WebTime.config.defaultWatchURLs
+  for watchDomain in WebTime.utils.getWatchURLs()
     foundIndex = domain.indexOf watchDomain
     if foundIndex isnt -1
       runClock watchDomain
@@ -47,7 +47,8 @@ checkTab = (tab) ->
 
 runClock = () ->
   unless isClockRunning()
-    clockInterval = setInterval updateClock, WebTime.config.timeInterval
+    timeIntervaleMilliseconds = WebTime.config.timeIntervalSeconds * 1000
+    clockInterval = setInterval updateClock, timeIntervaleMilliseconds
     updateIcon()
 
 stopClock = () ->
@@ -56,37 +57,37 @@ stopClock = () ->
     clockInterval = null
     updateIcon()
 
-getLocalStorageKey = () ->
+getElapsedTimeSecondsLocalStorageKey = () ->
   currentDate = new Date()
   day = currentDate.getDate()
   month = currentDate.getMonth() + 1
   year = currentDate.getFullYear()
-  localStorageKeyBase = WebTime.config.localStorageKeys.elapsedTimeBase
-  localStorageKey = localStorageKeyBase + year + '-' + month + '-' + day
+  localStorageKeyBase = WebTime.config.localStorageKeys.elapsedTimeSecondsBase
+  localStorageKey = localStorageKeyBase + '-' + year + '-' + month + '-' + day
   localStorageKey
 
-getElapsedTime = () ->
-  localStorageKey = getLocalStorageKey()
-  elapsedTime = localStorage.getItem localStorageKey
-  if not elapsedTime
-    elapsedTime = 0
+getElapsedTimeSeconds = () ->
+  localStorageKey = getElapsedTimeSecondsLocalStorageKey()
+  elapsedTimeSeconds = localStorage.getItem localStorageKey
+  if not elapsedTimeSeconds
+    elapsedTimeSeconds = 0
   else
-    elapsedTime = parseInt elapsedTime
-  elapsedTime
+    elapsedTimeSeconds = parseInt elapsedTimeSeconds
+  elapsedTimeSeconds
 
 getElapsedTimeMinutes = () ->
-  elapsedTime = getElapsedTime()
-  elapsedTimeMinutes = Math.floor ( elapsedTime / ( 1000 * 60 ) )
+  elapsedTimeSeconds = getElapsedTimeSeconds()
+  elapsedTimeMinutes = Math.floor ( elapsedTimeSeconds / 60 )
   elapsedTimeMinutes
 
-setElapsedTime = (elapsedTime) ->
-  localStorageKey = getLocalStorageKey()
-  localStorage.setItem localStorageKey, elapsedTime
+setElapsedTime = (elapsedTimeSeconds) ->
+  localStorageKey = getElapsedTimeSecondsLocalStorageKey()
+  localStorage.setItem localStorageKey, elapsedTimeSeconds
 
-updateClock = (elapsedTime) ->
-  elapsedTime = getElapsedTime()
-  elapsedTime += parseInt WebTime.config.timeInterval
-  setElapsedTime elapsedTime
+updateClock = (elapsedTimeSeconds) ->
+  elapsedTimeSeconds = getElapsedTimeSeconds()
+  elapsedTimeSeconds += parseInt WebTime.config.timeIntervalSeconds
+  setElapsedTime elapsedTimeSeconds
   updateIcon()
 
 isClockRunning = () ->
@@ -103,26 +104,30 @@ updateIcon = () ->
     chrome.browserAction.setBadgeBackgroundColor
       color: WebTime.config.badgeColor
 
-    text = getElapsedTimeMinutes()
+    text = getElapsedTimeMinutes().toString()
     if isOverTime()
       text += '!'
 
+    console.log 'text: ', text
+
     chrome.browserAction.setBadgeText
       text: text
+
+    console.log 'text done.'
   else
     chrome.browserAction.setBadgeText
       text: ''
 
 isOverTime = () ->
-  elapsedTime = getElapsedTime()
-  fractionElapsed = elapsedTime / WebTime.config.maxTimePerDay
+  elapsedTime = getElapsedTimeSeconds()
+  fractionElapsed = elapsedTime / WebTime.utils.getMaxSecondsPerDay()
   if fractionElapsed >= 1
     return true
   return false
 
 getIconColor = () ->
-  elapsedTime = getElapsedTime()
-  fractionElapsed = elapsedTime / WebTime.config.maxTimePerDay
+  elapsedTime = getElapsedTimeSeconds()
+  fractionElapsed = elapsedTime / WebTime.utils.getMaxSecondsPerDay()
   if fractionElapsed > 1
     fractionElapsed = 1
   gradientWidth = WebTime.config.gradientWidth
@@ -136,8 +141,8 @@ getIconColor = () ->
 
 getColorHex = (colorValue) ->
   hex = colorValue.toString 16
-  if hex is '0'
-    hex = '00'
+  if hex.length is 1
+    hex = '0' + hex
   hex
 
 getGradientCanvasContext = () ->

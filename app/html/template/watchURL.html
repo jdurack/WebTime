@@ -1,0 +1,8 @@
+<div style='clear:both;' id='watchURL-{{#if url}}{{index}}{{else}}new{{/if}}' class='watchURL'>
+  {{#if url}}
+    <input type='button' value='X' id='removeWatchURL-{{index}}' class='removeWatchURL'/>
+    {{url}}
+  {{else}}
+    <input type='text' placeholder='new site (e.g. cnn.com)' id='newWatchURL'/>
+  {{/if}}
+<div>

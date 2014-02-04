@@ -1,15 +1,138 @@
 (function() {
-  var addWatchURLToForm, watchURL, watchURLs, _i, _len;
+  var addEvents, addWatchURLToForm, addWatchURLsToForm, checkAndAddNewWatchURL, formSubmitEvent, getMaxMinutesPerDayElement, getNewWatchURLElement, init, maxMinutesPerDayChangeEvent, newWatchURLEvent, removeEvents, removeWatchURL, removeWatchURLClickEvent, resetEvents, resetForm, setMaxSecondsPerDayValue;
 
-  watchURLs = WebTime.utils.getWatchURLs();
+  init = function() {
+    return resetForm();
+  };
 
-  console.log('watchURLs...', watchURLs);
+  addWatchURLsToForm = function() {
+    var index, watchURL, watchURLs, _i, _len, _results;
+    watchURLs = WebTime.utils.getWatchURLs();
+    addWatchURLToForm();
+    _results = [];
+    for (index = _i = 0, _len = watchURLs.length; _i < _len; index = ++_i) {
+      watchURL = watchURLs[index];
+      _results.push(addWatchURLToForm(index, watchURL));
+    }
+    return _results;
+  };
 
-  for (_i = 0, _len = watchURLs.length; _i < _len; _i++) {
-    watchURL = watchURLs[_i];
-    addWatchURLToForm(watchURL);
-  }
+  addWatchURLToForm = function(index, watchURL, prepend) {
+    var watchURLHTML, watchURLTemplate;
+    watchURLTemplate = WebTime.utils.getTemplate('watchURL');
+    watchURLHTML = watchURLTemplate({
+      index: index,
+      url: watchURL
+    });
+    if (prepend) {
+      return $('#watchURL-new').after(watchURLHTML);
+    } else {
+      return $('#watchURLs').append(watchURLHTML);
+    }
+  };
 
-  addWatchURLToForm = function(watchURL) {};
+  addEvents = function() {
+    $('#maxMinutesPerDay').on('change', maxMinutesPerDayChangeEvent);
+    $('.removeWatchURL').on('click', removeWatchURLClickEvent);
+    $('#newWatchURL').on('blur', newWatchURLEvent);
+    return $('#optionsForm').on('submit', formSubmitEvent);
+  };
+
+  removeEvents = function() {
+    $('#maxMinutesPerDay').off('change', maxMinutesPerDayChangeEvent);
+    $('.removeWatchURL').off('click', removeWatchURLClickEvent);
+    $('#newWatchURL').off('blur', newWatchURLEvent);
+    return $('#optionsForm').off('submit', formSubmitEvent);
+  };
+
+  resetEvents = function() {
+    removeEvents();
+    return addEvents();
+  };
+
+  maxMinutesPerDayChangeEvent = function(event) {
+    var element, newMaxMinutesPerDay, newMaxSecondsPerDay;
+    element = getMaxMinutesPerDayElement();
+    newMaxMinutesPerDay = element.value;
+    newMaxSecondsPerDay = newMaxMinutesPerDay * 60;
+    return WebTime.utils.setMaxSecondsPerDay(newMaxMinutesPerDay);
+  };
+
+  removeWatchURLClickEvent = function(event) {
+    var index, indicator;
+    indicator = 'removeWatchURL-';
+    index = event.currentTarget.id.substr(indicator.length);
+    return removeWatchURL(index);
+  };
+
+  newWatchURLEvent = function(event) {
+    return checkAndAddNewWatchURL();
+  };
+
+  formSubmitEvent = function(event) {
+    event.preventDefault();
+    checkAndAddNewWatchURL();
+    return false;
+  };
+
+  getNewWatchURLElement = function() {
+    var element;
+    element = $('#newWatchURL')[0];
+    return element;
+  };
+
+  getMaxMinutesPerDayElement = function() {
+    var element;
+    element = $('#maxMinutesPerDay')[0];
+    return element;
+  };
+
+  checkAndAddNewWatchURL = function() {
+    var existingIndex, watchURL, watchURLs;
+    watchURL = getNewWatchURLElement().value;
+    if (!watchURL) {
+      return;
+    }
+    watchURL = watchURL.toLowerCase();
+    watchURLs = WebTime.utils.getWatchURLs();
+    existingIndex = watchURLs.indexOf(watchURL);
+    if (existingIndex !== -1) {
+      return;
+    }
+    watchURLs.unshift(watchURL);
+    WebTime.utils.setWatchURLs(watchURLs);
+    return resetForm();
+  };
+
+  resetForm = function() {
+    $('.watchURL').remove();
+    addWatchURLsToForm();
+    setMaxSecondsPerDayValue();
+    getNewWatchURLElement().focus();
+    return resetEvents();
+  };
+
+  setMaxSecondsPerDayValue = function() {
+    var maxSecondsPerDay;
+    maxSecondsPerDay = WebTime.utils.getMaxSecondsPerDay();
+    return getMaxMinutesPerDayElement().value = maxSecondsPerDay;
+  };
+
+  removeWatchURL = function(index) {
+    var watchURLs;
+    if (!(index >= 0)) {
+      return;
+    }
+    watchURLs = WebTime.utils.getWatchURLs();
+    if (!(watchURLs && watchURLs.length > index)) {
+      return;
+    }
+    watchURLs.splice(index, 1);
+    WebTime.utils.setWatchURLs(watchURLs);
+    $('#watchURL-' + index).remove();
+    return resetForm();
+  };
+
+  $(document).ready(init);
 
 }).call(this);
