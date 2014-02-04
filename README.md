@@ -14,18 +14,18 @@ I find it useful to know how much time I'm spending 'unproductively'.  I set my 
 
 Requires npm and grunt.
 
-To install:
-1) Run 'npm install'
-2) Run 'grunt'
-3) Open Chrome, go to chrome://extensions
-4) Make sure 'Developer Mode' is selected
-5) Click 'Load unpacked extension...'
-6) Select the 'WebTime/app' directory and click 'Open'
+## Install
+1. Run 'npm install'
+2. Run 'grunt'
+3. Open Chrome, go to chrome://extensions
+4. Make sure 'Developer Mode' is selected
+5. Click 'Load unpacked extension...'
+6. Select the 'WebTime/app' directory and click 'Open'
 
-To configure:
-1) Right click the extension icon on the right side of your Chrome toolbar, and select 'options'.  The icon should be a green circle.
-2) Set the time limit per day.
-3) Add the list of sites on which you'd like to keep track of your time.
+## Configure
+1. Right click the extension icon on the right side of your Chrome toolbar, and select 'options'.  The icon should be a green circle.
+2. Set the time limit per day.
+3. Add the list of sites on which you'd like to keep track of your time.
 
 Enjoy!
 

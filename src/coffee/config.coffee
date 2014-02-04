@@ -13,12 +13,5 @@ WebTime.config =
   gradientStopColor: 'DarkRed'
   badgeColor: 'DarkRed'
   defaultWatchURLs: [
-    'cnn.com'
-    'droid-life.com'
-    'engadget.com'
-    'movieswithbutter.com'
     'techcrunch.com'
-    'traileraddict.com'
-    'wired.com'
-    'woot.com'
   ]
