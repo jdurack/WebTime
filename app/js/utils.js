@@ -1,5 +1,16 @@
 (function() {
   WebTime.utils = {
+    isFirstRun: function() {
+      var hasRun;
+      hasRun = localStorage.getItem(WebTime.config.localStorageKeys.hasRun);
+      if (hasRun) {
+        return false;
+      }
+      return true;
+    },
+    setHasRun: function() {
+      return localStorage.setItem(WebTime.config.localStorageKeys.hasRun, true);
+    },
     getWatchURLs: function() {
       var watchURLs, watchURLsJSON;
       watchURLsJSON = localStorage.getItem(WebTime.config.localStorageKeys.watchURLs);

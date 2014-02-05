@@ -1,8 +1,17 @@
 (function() {
-  var addEvents, addWatchURLToForm, addWatchURLsToForm, checkAndAddNewWatchURL, formSubmitEvent, getMaxMinutesPerDayElement, getNewWatchURLElement, init, maxMinutesPerDayChangeEvent, newWatchURLBlurEvent, newWatchURLKeypressEvent, removeEvents, removeWatchURL, removeWatchURLClickEvent, resetEvents, resetForm, setMaxMinutesPerDayValue;
+  var addEvents, addWatchURLToForm, addWatchURLsToForm, checkAndAddNewWatchURL, checkFirstRun, formSubmitEvent, getMaxMinutesPerDayElement, getNewWatchURLElement, init, maxMinutesPerDayChangeEvent, newWatchURLBlurEvent, newWatchURLKeypressEvent, removeEvents, removeWatchURL, removeWatchURLClickEvent, resetEvents, resetForm, setMaxMinutesPerDayValue;
 
   init = function() {
-    return resetForm();
+    resetForm();
+    return checkFirstRun();
+  };
+
+  checkFirstRun = function() {
+    if (!WebTime.utils.isFirstRun()) {
+      return;
+    }
+    $('#firstRunInfo').show();
+    return WebTime.utils.setHasRun();
   };
 
   addWatchURLsToForm = function() {

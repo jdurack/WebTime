@@ -1,5 +1,14 @@
 init = () ->
   resetForm()
+  checkFirstRun()
+
+checkFirstRun = () ->
+  unless WebTime.utils.isFirstRun()
+    return
+
+  $('#firstRunInfo').show()
+  WebTime.utils.setHasRun()
+
 
 addWatchURLsToForm = () ->
   watchURLs = WebTime.utils.getWatchURLs()

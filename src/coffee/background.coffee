@@ -5,11 +5,17 @@ gradientCanvas = null
 gradientCanvasContext = null
 
 run = () ->
-  #console.log 'WebTime running'
+  checkFirstRun()
   chrome.tabs.onUpdated.addListener getAndCheckCurrentTab
   chrome.tabs.onActivated.addListener getAndCheckCurrentTab
   chrome.windows.onFocusChanged.addListener getAndCheckCurrentTab
   updateIcon()
+
+checkFirstRun = () ->
+  if WebTime.utils.isFirstRun()
+    optionsURL = 'chrome-extension://' + chrome.i18n.getMessage('@@extension_id') + '/html/options.html'
+    chrome.tabs.create
+      url: optionsURL
 
 getAndCheckCurrentTab = () ->
   chrome.windows.getCurrent {}, (window) ->
@@ -108,12 +114,8 @@ updateIcon = () ->
     if isOverTime()
       text += '!'
 
-    console.log 'text: ', text
-
     chrome.browserAction.setBadgeText
       text: text
-
-    console.log 'text done.'
   else
     chrome.browserAction.setBadgeText
       text: ''

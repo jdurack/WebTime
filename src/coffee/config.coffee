@@ -1,6 +1,7 @@
 WebTime.config = 
   timeIntervalSeconds: 1
   localStorageKeys:
+    hasRun: 'WebTime.hasRun'
     elapsedTimeSecondsBase: 'WebTime.elapsedTimeSeconds'
     watchURLs: 'WebTime.watchURLs'
     maxSecondsPerDay: 'WebTime.maxSecondsPerDay'

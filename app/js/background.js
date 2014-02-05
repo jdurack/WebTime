@@ -1,5 +1,5 @@
 (function() {
-  var activeTab, checkTab, clockInterval, getAndCheckCurrentTab, getColorHex, getDomainFromURL, getElapsedTimeMinutes, getElapsedTimeSeconds, getElapsedTimeSecondsLocalStorageKey, getGradientCanvasContext, getIconColor, getIconImageData, gradientCanvas, gradientCanvasContext, iconCanvas, isClockRunning, isOverTime, run, runClock, setElapsedTime, stopClock, updateClock, updateIcon;
+  var activeTab, checkFirstRun, checkTab, clockInterval, getAndCheckCurrentTab, getColorHex, getDomainFromURL, getElapsedTimeMinutes, getElapsedTimeSeconds, getElapsedTimeSecondsLocalStorageKey, getGradientCanvasContext, getIconColor, getIconImageData, gradientCanvas, gradientCanvasContext, iconCanvas, isClockRunning, isOverTime, run, runClock, setElapsedTime, stopClock, updateClock, updateIcon;
 
   activeTab = null;
 
@@ -12,10 +12,21 @@
   gradientCanvasContext = null;
 
   run = function() {
+    checkFirstRun();
     chrome.tabs.onUpdated.addListener(getAndCheckCurrentTab);
     chrome.tabs.onActivated.addListener(getAndCheckCurrentTab);
     chrome.windows.onFocusChanged.addListener(getAndCheckCurrentTab);
     return updateIcon();
+  };
+
+  checkFirstRun = function() {
+    var optionsURL;
+    if (WebTime.utils.isFirstRun()) {
+      optionsURL = 'chrome-extension://' + chrome.i18n.getMessage('@@extension_id') + '/html/options.html';
+      return chrome.tabs.create({
+        url: optionsURL
+      });
+    }
   };
 
   getAndCheckCurrentTab = function() {
@@ -146,11 +157,9 @@
       if (isOverTime()) {
         text += '!';
       }
-      console.log('text: ', text);
-      chrome.browserAction.setBadgeText({
+      return chrome.browserAction.setBadgeText({
         text: text
       });
-      return console.log('text done.');
     } else {
       return chrome.browserAction.setBadgeText({
         text: ''

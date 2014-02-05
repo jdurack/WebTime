@@ -1,4 +1,13 @@
 WebTime.utils =
+  isFirstRun: () ->
+    hasRun = localStorage.getItem WebTime.config.localStorageKeys.hasRun
+    if hasRun
+      return false
+    return true
+
+  setHasRun: () ->
+    localStorage.setItem WebTime.config.localStorageKeys.hasRun, true
+
   getWatchURLs: () ->
     watchURLsJSON = localStorage.getItem WebTime.config.localStorageKeys.watchURLs
     watchURLs = []
