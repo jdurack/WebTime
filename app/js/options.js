@@ -1,5 +1,5 @@
 (function() {
-  var addEvents, addWatchURLToForm, addWatchURLsToForm, checkAndAddNewWatchURL, formSubmitEvent, getMaxMinutesPerDayElement, getNewWatchURLElement, init, maxMinutesPerDayChangeEvent, newWatchURLEvent, removeEvents, removeWatchURL, removeWatchURLClickEvent, resetEvents, resetForm, setMaxMinutesPerDayValue;
+  var addEvents, addWatchURLToForm, addWatchURLsToForm, checkAndAddNewWatchURL, formSubmitEvent, getMaxMinutesPerDayElement, getNewWatchURLElement, init, maxMinutesPerDayChangeEvent, newWatchURLBlurEvent, newWatchURLKeypressEvent, removeEvents, removeWatchURL, removeWatchURLClickEvent, resetEvents, resetForm, setMaxMinutesPerDayValue;
 
   init = function() {
     return resetForm();
@@ -34,14 +34,16 @@
   addEvents = function() {
     $('#maxMinutesPerDay').on('change', maxMinutesPerDayChangeEvent);
     $('.removeWatchURL').on('click', removeWatchURLClickEvent);
-    $('#newWatchURL').on('blur', newWatchURLEvent);
+    $('#newWatchURL').on('blur', newWatchURLBlurEvent);
+    $('#newWatchURL').on('keypress', newWatchURLKeypressEvent);
     return $('#optionsForm').on('submit', formSubmitEvent);
   };
 
   removeEvents = function() {
     $('#maxMinutesPerDay').off('change', maxMinutesPerDayChangeEvent);
     $('.removeWatchURL').off('click', removeWatchURLClickEvent);
-    $('#newWatchURL').off('blur', newWatchURLEvent);
+    $('#newWatchURL').off('blur', newWatchURLBlurEvent);
+    $('#newWatchURL').off('keypress', newWatchURLKeypressEvent);
     return $('#optionsForm').off('submit', formSubmitEvent);
   };
 
@@ -65,8 +67,16 @@
     return removeWatchURL(index);
   };
 
-  newWatchURLEvent = function(event) {
+  newWatchURLBlurEvent = function(event) {
     return checkAndAddNewWatchURL();
+  };
+
+  newWatchURLKeypressEvent = function(event) {
+    var keyCode;
+    keyCode = event.keyCode;
+    if (keyCode === 13) {
+      return checkAndAddNewWatchURL();
+    }
   };
 
   formSubmitEvent = function(event) {

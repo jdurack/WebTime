@@ -24,13 +24,15 @@ addWatchURLToForm = (index, watchURL, prepend) ->
 addEvents = () ->
   $('#maxMinutesPerDay').on 'change', maxMinutesPerDayChangeEvent
   $('.removeWatchURL').on 'click', removeWatchURLClickEvent
-  $('#newWatchURL').on 'blur', newWatchURLEvent
+  $('#newWatchURL').on 'blur', newWatchURLBlurEvent
+  $('#newWatchURL').on 'keypress', newWatchURLKeypressEvent
   $('#optionsForm').on 'submit', formSubmitEvent
 
 removeEvents = () ->
   $('#maxMinutesPerDay').off 'change', maxMinutesPerDayChangeEvent
   $('.removeWatchURL').off 'click', removeWatchURLClickEvent
-  $('#newWatchURL').off 'blur', newWatchURLEvent
+  $('#newWatchURL').off 'blur', newWatchURLBlurEvent
+  $('#newWatchURL').off 'keypress', newWatchURLKeypressEvent
   $('#optionsForm').off 'submit', formSubmitEvent
 
 resetEvents = () ->
@@ -48,8 +50,13 @@ removeWatchURLClickEvent = (event) ->
   index = event.currentTarget.id.substr indicator.length
   removeWatchURL index
 
-newWatchURLEvent = (event) ->
+newWatchURLBlurEvent = (event) ->
   checkAndAddNewWatchURL()
+
+newWatchURLKeypressEvent = (event) ->
+  keyCode = event.keyCode
+  if keyCode is 13 #enter
+    checkAndAddNewWatchURL()
 
 formSubmitEvent = (event) ->
   event.preventDefault()
