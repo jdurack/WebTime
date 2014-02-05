@@ -1,68 +1,81 @@
-<h1>Welcome to WebTime!</h1>
-<i>"keep tabs on your tabs"</i>
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <title>WebTime Options</title>
+  </head>
 
-<p>
-  WebTime is a dead-simple Chrome extension that keeps track of how much time you spend on certain sites each day.
-</p>
+  <body>
 
-<p>
-  You configure a list of sites on which you want to track time, and a daily time limit.  WebTime gives you a colored icon in the toolbar to help you keep track of your daily time on those sites.
-</p>
+    <h1>Welcome to WebTime!</h1>
+    <i>"keep tabs on your tabs"</i>
 
-<p>
-  The toolbar icon changes slowly from green --> yellow --> orange --> red.  When you're on a listed site, it shows you your total minutes today on your site list.  If you've gone over your alotment, it adds '!'.
-</p>
+    <p>
+      WebTime is a dead-simple Chrome extension that keeps track of how much time you spend on certain sites each day.
+    </p>
 
-<p>
-  I find it useful to know how much time I'm spending 'unproductively'.  I set my list to be domains that I go when I'm bored, e.g. 'cnn.com', 'techcrunch.com', etc.
-</p>
+    <p>
+      You configure a list of sites on which you want to track time, and a daily time limit.  WebTime gives you a colored icon in the toolbar to help you keep track of your daily time on those sites.
+    </p>
 
-<div id='firstRunInfo' style='display:none;'>
-  <p>
-    <b>To get started, set your time limit and site list below.</b>
-  </p>
+    <p>
+      The toolbar icon changes slowly from green --> yellow --> orange --> red.  When you're on a listed site, it shows you your total minutes today on your site list.  If you've gone over your alotment, it adds '!'.
+    </p>
 
-  <b>NOTE:</b>
-  You can always get back to this options page by right clicking the WebTime extension icon on the right side of your Chrome toolbar, and selecting 'options'.
-</div>
+    <p>
+      I find it useful to know how much time I'm spending 'unproductively'.  I set my list to be domains that I go when I'm bored, e.g. 'cnn.com', 'techcrunch.com', etc.
+    </p>
 
-<p>
-  <b>PRIVACY:</b>
-  WebTime runs only on your computer and <b>never sends any data anywhere</b>.  WebTime only knows what URL you have open.
-</p>
+    <div id='firstRunInfo' style='display:none;'>
+      <p>
+        <b>To get started, set your time limit and site list below.</b>
+      </p>
 
-<p>
-  WebTime is free and open source: https://github.com/jdurack/WebTime
-</p>
+      <b>NOTE:</b>
+      You can always get back to this options page by right clicking the WebTime extension icon on the right side of your Chrome toolbar, and selecting 'options'.
+    </div>
 
-<p>
-  Enjoy!
-</p>
+    <p>
+      <b>PRIVACY:</b>
+      WebTime runs only on your computer and <b>never sends any data anywhere</b>.  WebTime only knows what URL you have open.
+    </p>
 
-<br/><br/>
-<h2>WebTime Options</h2>
-All changes are saved automatically.
-<br/><br/>
+    <p>
+      WebTime is free and open source: https://github.com/jdurack/WebTime
+    </p>
 
-<form id='optionsForm'>
-  <b>Max minutes per day</b>
-  <div>
-    <input type='number' style='width:50px;' id='maxMinutesPerDay' />
-  </div>
+    <p>
+      Enjoy!
+    </p>
 
-  <br/><br/>
+    <br/><br/>
+    <h2>WebTime Options</h2>
+    All changes are saved automatically.
+    <br/><br/>
 
-  <b>List of sites to track</b>
-  <div id='watchURLs'></div>
-</form>
+    <form id='optionsForm'>
+      <b>Max minutes per day</b>
+      <div>
+        <input type='number' style='width:50px;' id='maxMinutesPerDay' />
+      </div>
 
-<!-- vendor -->
-<script src='../js/vendor/jquery-2.1.0.min.js'></script>
-<script src='../js/vendor/handlebars-v1.3.0.js'></script>
+      <br/><br/>
 
-<!-- WebTime options js -->
-<script src='../js/namespace.js'></script>
-<script src='../js/config.js'></script>
-<script src='../js/templates.js'></script>
-<script src='../js/utils.js'></script>
-<script src='../js/options.js'></script>
+      <b>List of sites to track</b>
+      <div id='watchURLs'></div>
+    </form>
+
+    <!-- vendor -->
+    <script src='../js/vendor/jquery-2.1.0.min.js'></script>
+    <script src='../js/vendor/handlebars-v1.3.0.js'></script>
+
+    <!-- WebTime options js -->
+    <script src='../js/namespace.js'></script>
+    <script src='../js/config.js'></script>
+    <script src='../js/templates.js'></script>
+    <script src='../js/utils.js'></script>
+    <script src='../js/options.js'></script>
+
+  </body>
+</html>
