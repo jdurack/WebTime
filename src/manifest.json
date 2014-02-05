@@ -1,6 +1,6 @@
 {
     "name": "WebTime"
-  , "version": "0.0.2"
+  , "version": "0.0.3"
   , "manifest_version": 2
   , "description": "WebTime. Keep tabs on your tabs."
   , "background": {
@@ -11,8 +11,10 @@
         , "js/background.js"
       ]
     , "persistent": true
-  }
+    }
   , "options_page": "html/options.html"
+  , "browser_action": {
+    }
   , "permissions": [
       "tabs"
     ]
