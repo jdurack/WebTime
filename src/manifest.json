@@ -1,26 +1,19 @@
 {
-  "name": "WebTime",
-  "version": "0.0.1",
-  "manifest_version": 2,
-  "description": "WebTime. Keep tabs on your tabs.",
-  "background": {
-    "scripts": [
-        "js/namespace.js"
-      , "js/config.js"
-      , "js/utils.js"
-      , "js/background.js"
-    ],
-    "persistent": true
-  },
-  "options_page": "html/options.html",
-  "browser_action": {
-    //"default_icon": "img/icon.png"
-  },
-  "content_scripts": [
-  ],
-  "web_accessible_resources": [
-  ],
-  "permissions": [
-    "tabs"
-  ]
+    "name": "WebTime"
+  , "version": "0.0.2"
+  , "manifest_version": 2
+  , "description": "WebTime. Keep tabs on your tabs."
+  , "background": {
+      "scripts": [
+          "js/namespace.js"
+        , "js/config.js"
+        , "js/utils.js"
+        , "js/background.js"
+      ]
+    , "persistent": true
+  }
+  , "options_page": "html/options.html"
+  , "permissions": [
+      "tabs"
+    ]
 }
